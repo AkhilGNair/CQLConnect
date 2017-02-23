@@ -11,6 +11,6 @@
 
 #' @import sparklyr
 #' @export
-spark_hello <- function(sc) {
-  sparklyr::invoke_static(sc, "SparkHello.HelloWorld", "hello")
+spark_hello <- function(sc, num) {
+  sparklyr::invoke_static(sc, "SparkHello.HelloWorld", "hello", num)
 }

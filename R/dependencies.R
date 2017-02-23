@@ -7,6 +7,8 @@ spark_dependencies <- function(spark_version, scala_version, ...) {
       )
     ),
     packages = c(
+      # "com.datastax.spark:spark-cassandra-connector_2.11:2.0.0-M3",
+      # "datastax:spark-cassandra-connector:2.0.0-RC1-s_2.11"
     )
   )
 }
