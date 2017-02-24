@@ -12,5 +12,12 @@
 #' @import sparklyr
 #' @export
 spark_hello <- function(sc, num) {
-  sparklyr::invoke_static(sc, "SparkHello.HelloWorld", "hello", num)
+  sparklyr::invoke_static(sc, "SparkHello.HelloWorld", "sum", num)
+}
+
+
+#' @import sparklyr
+#' @export
+execute_cql <- function(sc, str) {
+  sparklyr::invoke_static(sc, "CQLStrings.CQL", "execute_cql", str)
 }
