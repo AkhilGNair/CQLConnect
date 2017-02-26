@@ -11,13 +11,13 @@
 
 #' @import sparklyr
 #' @export
-spark_hello <- function(sc, num) {
-  sparklyr::invoke_static(sc, "SparkHello.HelloWorld", "sum", num)
+cql_connect <- function(sc, cluster, keyspace) {
+  sparklyr::invoke_static(sc, "CQLScalaCass.CQL", "cql_session", cluster, keyspace)
 }
 
 
 #' @import sparklyr
 #' @export
-execute_cql <- function(sc, str) {
-  sparklyr::invoke_static(sc, "CQLStrings.CQL", "execute_cql", str)
+get_row <- function(sc, session, table) {
+  sparklyr::invoke_static(sc, "CQLScalaCass.CQL", "get_row", session, table)
 }

@@ -1,19 +1,23 @@
-import com.weather.scalacass._
+package CQLScalaCass
+
 import com.datastax.driver.core.{ Cluster, Row }
+import com.weather.scalacass._
+import com.weather.scalacass.syntax._
 
-object thing {
+object CQL {
 
-  implicit val cluster = Cluster.builder.addContactPoint("localhost").build()
-  implicit val session = cluster.connect()
+  def cql_session( cl:String, ks:String ) : ScalaSession = {
+    val cluster = Cluster.builder.addContactPoint(cl).build()
+    val session = cluster.connect()
+    val sSession = ScalaSession(ks)(session)
+    sSession
+  }
 
-  val sSession = ScalaSession("spark")(session) // if mykeyspace already exists
+  def query_row( session:ScalaSession, table:String ) : Option[Row] = session.selectOne(table, ScalaSession.NoQuery())
 
-  def test( a:Any* ) : Iterator[Row] = {
-    // given the table and query definition
-    case class MyTable(s: String, i: Int, l: Option[Long])
-    case class Query(s: String, i: Int)
-
-    val selectRes: Iterator[Row] = sSession.select("mytable", Query("asdf", 123), false, Option(1L))
+  def get_row( session:ScalaSession, table:String ) : Array[Any] = {
+    val aRow = query_row(session, table).get
+    Array(aRow.getUUID(0), aRow.getInt(1), aRow.getString(2), aRow.getString(3), aRow.getUUID(4),  aRow.getString(5))
   }
 
 }

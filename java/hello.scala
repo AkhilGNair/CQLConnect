@@ -9,8 +9,8 @@ object HelloWorld {
 
   val conf = new SparkConf()
 
-  def sum( a:Array[Array[Int]] ) : String = {
-    "Hello, world! - From Scala. Your number is " + addInt(a(0)(0), a(0)(1))
+  def sum( a:Array[Int] ) : String = {
+    "Hello, world! - From Scala. Your number is " + addInt(a(0), a(1))
   }
 
   def addInt( a:Int, b:Int ) : Int = {
