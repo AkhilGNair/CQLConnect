@@ -46,7 +46,7 @@ object PreviousPoll {
                        train_integrity: Int,
                        vehicle_door_status: Int )
 
-  implicit def run(e: PollModel): Array[Any] = e.productIterator.map {
+  def run(e: PollModel): Array[Any] = e.productIterator.map {
     case op: Option[_] => op.getOrElse(null)
     case v             => v
   }.toArray
@@ -58,15 +58,15 @@ object PreviousPoll {
     sSession
   }
 
-  def query_row( session:ScalaSession, query:String, str_date:String, str_vhid:String, str_loop_id:String, str_time:String ) : Iterator[Row] = {
+  def query_row( session:ScalaSession, query:String, str_date:String, str_vhid:Int, str_loop_id:Int, str_time:String ) : Iterator[Row] = {
     val time:java.util.Date = DateTime.parse(str_time).toDate
-    session.rawSelect(query, str_date, str_vhid, str_loop_id, str_time)
+    session.rawSelect(query, str_date, Int.box(str_vhid), Int.box(str_loop_id), time)
   }
 
-  def get_row( session:ScalaSession, query:String, str_date:String, str_vhid:String, str_loop_id:String, str_time:String ) : Array[Any] = {
-    val aRow = query_row(session, query:String, str_date, str_vhid, str_loop_id, str_time).next()
+  def get_row( session:ScalaSession, query:String, str_date:String, int_vhid:Int, int_loop_id:Int, str_time:String ) : Array[Any] = {
+    val aRow: Row = query_row(session, query:String, str_date, int_vhid, int_loop_id, str_time).next()  // LIMIT 1 query, select next
     val values: PollModel = aRow.as[PollModel]
-    values
+    run(values)
   }
 
 }
