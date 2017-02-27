@@ -1,4 +1,4 @@
-package CQLConnector
+package CQLConnect
 
 import scala.language.implicitConversions
 import org.joda.time.DateTime
