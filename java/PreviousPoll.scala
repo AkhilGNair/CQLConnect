@@ -58,9 +58,12 @@ object PreviousPoll {
     sSession
   }
 
+  val DateFormatter = new java.text.SimpleDateFormat("yyyy-MM-dd")
+
   def query_row( session:ScalaSession, query:String, str_date:String, str_vhid:Int, str_loop_id:Int, str_time:String ) : Iterator[Row] = {
     val time:java.util.Date = DateTime.parse(str_time).toDate
-    session.rawSelect(query, str_date, Int.box(str_vhid), Int.box(str_loop_id), time)
+    val date:java.util.Date = DateFormatter.parse(str_date)
+    session.rawSelect(query, date, Int.box(str_vhid), Int.box(str_loop_id), time)
   }
 
   def get_row( session:ScalaSession, query:String, str_date:String, int_vhid:Int, int_loop_id:Int, str_time:String ) : Array[Any] = {
