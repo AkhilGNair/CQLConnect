@@ -23,7 +23,7 @@ object PreviousPoll {
                          request_type1_response,
                          train_integrity,
                          vehicle_door_status
-                       FROM """ + keyspace + "." + table + """WHERE
+                       FROM """ + keyspace + "." + table + """ WHERE
                          date=? AND
                          vehicle_id_command=? AND
                          actual_loop_id=? AND
