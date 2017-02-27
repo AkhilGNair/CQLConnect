@@ -1,5 +1,7 @@
 package CQLStrings
 
+// All rough work trying without scalacass!
+
 import com.datastax.driver.core._
 import shade.com.datastax.spark.connector.google.common.util.concurrent.{ FutureCallback, Futures, ListenableFuture }
 import scala.concurrent.{ ExecutionContext, Future, Promise }
