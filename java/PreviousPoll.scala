@@ -1,7 +1,12 @@
 package CQLConnect
 
 import scala.language.implicitConversions
+
+import java.sql.Timestamp
+import java.util.Date
+import java.text.SimpleDateFormat
 import org.joda.time.DateTime
+
 import com.datastax.driver.core.{ Cluster, Row, LocalDate }
 import com.weather.scalacass._
 import com.weather.scalacass.syntax._
@@ -33,7 +38,7 @@ object PreviousPoll {
   }
 
   case class PollModel(actual_loop_id: Int,
-                       time: java.util.Date,
+                       time: Date,
                        vcc: Int,
                        channel: Int,
                        active_passive_reply: Int,
@@ -58,11 +63,16 @@ object PreviousPoll {
     sSession
   }
 
-  val DateFormatter = new java.text.SimpleDateFormat("yyyy-MM-dd")
+  val DateFormatter = new SimpleDateFormat("yyyy-MM-dd")
+
+  implicit def DateToTime( date:Date ) : Timestamp = {
+    val time:Timestamp = new Timestamp(date.getTime())
+    time
+  }
 
   def query_row( session:ScalaSession, query:String, str_date:String, str_vhid:Int, str_loop_id:Int, str_time:String ) : Iterator[Row] = {
-    val time:java.util.Date = DateTime.parse(str_time).toDate
-    val date:java.util.Date = DateFormatter.parse(str_date)
+    val time:Date = DateTime.parse(str_time).toDate
+    val date:Date = DateFormatter.parse(str_date)
     val localdate:LocalDate = LocalDate.fromMillisSinceEpoch(date.getTime())
     session.rawSelect(query, localdate, Int.box(str_vhid), Int.box(str_loop_id), time)
   }
