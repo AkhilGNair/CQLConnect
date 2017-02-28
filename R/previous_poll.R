@@ -22,7 +22,7 @@ cql_construct_query <- function(sc, keyspace, table) {
 #' @export
 cql_previous_poll <- function(sc, session, query, str_date, str_vhid, str_loop_id, str_time) {
   row = sparklyr::invoke_static(sc, "CQLConnect.PreviousPoll", "get_row", session, query, str_date, str_vhid, str_loop_id, str_time)
-  row[[2]] = date_to_time(row[[2]])  # Comes back with a java object to be converted to a timestamp
+  row[[2]] = date_to_time(sc, row[[2]])  # Comes back with a java object to be converted to a timestamp
   row
 }
 
