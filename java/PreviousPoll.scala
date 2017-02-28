@@ -51,7 +51,7 @@ object PreviousPoll {
                        train_integrity: Int,
                        vehicle_door_status: Int )
 
-  def run(e: PollModel): Array[Any] = e.productIterator.map {
+  def extract_values(e: PollModel): Array[Any] = e.productIterator.map {
     case op: Option[_] => op.getOrElse(null)
     case v             => v
   }.toArray
@@ -65,7 +65,7 @@ object PreviousPoll {
 
   val DateFormatter = new SimpleDateFormat("yyyy-MM-dd")
 
-  implicit def DateToTime( date:Date ) : Timestamp = {
+  def date_to_time( date:Date ) : Timestamp = {
     val time:Timestamp = new Timestamp(date.getTime())
     time
   }
@@ -79,8 +79,8 @@ object PreviousPoll {
 
   def get_row( session:ScalaSession, query:String, str_date:String, int_vhid:Int, int_loop_id:Int, str_time:String ) : Array[Any] = {
     val aRow: Row = query_row(session, query:String, str_date, int_vhid, int_loop_id, str_time).next()  // LIMIT 1 query, select next
-    val values: PollModel = aRow.as[PollModel]
-    run(values)
+    val model: PollModel = aRow.as[PollModel]
+    extract_values(model)
   }
 
 }
