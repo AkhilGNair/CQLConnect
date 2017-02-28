@@ -6,10 +6,10 @@ Authors@R: c(
     person("Akhil", "Nair", email = "akhil.nair@amey.co.uk", role = c("aut", "cre"))
     )
 Maintainer: Akhil Nair <akhil.nair@amey.co.uk>
-Description: This is not a generic package currently - It queries a single row from
-    a specific data model as this is the only functionality I required.  It's a good
-    template though! Change the query and model if this is not updated to be more 
-    generic soon...
+Description: This is not a generic package currently - It queries a single row
+    from a specific data model as this is the only functionality I required. It's
+    a good template though! Change the query and model if this is not updated to be
+    more generic soon...
 License: MIT LICENSE
 LazyData: TRUE
 Depends:
@@ -21,3 +21,7 @@ Remotes: rstudio/sparklyr
 Suggests:
     testthat
 RoxygenNote: 5.0.1
+Collate:
+    'dependencies.R'
+    'utils.R'
+    'previous_poll.R'

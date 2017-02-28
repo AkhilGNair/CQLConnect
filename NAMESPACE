@@ -2,6 +2,5 @@
 
 export(cql_connect)
 export(cql_construct_query)
-export(cql_date_to_time)
 export(cql_previous_poll)
 import(sparklyr)
