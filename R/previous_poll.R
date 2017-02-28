@@ -22,7 +22,7 @@ cql_construct_query <- function(sc, keyspace, table) {
 #' @export
 cql_previous_poll <- function(sc, session, query, str_date, str_vhid, str_loop_id, str_time) {
   # Pretty specific
-  timestamp = stringr::str_replace(str_time, "([0-9]{4}-[0-9]{2}-[0-9]{2}) ([0-9]{2}:[0-9]{2}:[0-9]{2})", "\\1T\\2")
+  timestamp = stringr::str_replace(str_time, "([0-9]{4}-[0-9]{2}-[0-9]{2}) ([0-9]{2}:[0-9]{2}:[0-9]{2}+)", "\\1T\\2")
   row = sparklyr::invoke_static(sc, "CQLConnect.PreviousPoll", "get_row", session, query, str_date, str_vhid, str_loop_id, timestamp)
   row[[2]] = date_to_time(sc, row[[2]])  # Comes back with a java object to be converted to a timestamp
   row
