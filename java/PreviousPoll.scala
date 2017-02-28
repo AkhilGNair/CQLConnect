@@ -2,7 +2,7 @@ package CQLConnect
 
 import scala.language.implicitConversions
 import org.joda.time.DateTime
-import com.datastax.driver.core.{ Cluster, Row }
+import com.datastax.driver.core.{ Cluster, Row, LocalDate }
 import com.weather.scalacass._
 import com.weather.scalacass.syntax._
 
@@ -63,7 +63,8 @@ object PreviousPoll {
   def query_row( session:ScalaSession, query:String, str_date:String, str_vhid:Int, str_loop_id:Int, str_time:String ) : Iterator[Row] = {
     val time:java.util.Date = DateTime.parse(str_time).toDate
     val date:java.util.Date = DateFormatter.parse(str_date)
-    session.rawSelect(query, date, Int.box(str_vhid), Int.box(str_loop_id), time)
+    val localdate:LocalDate = LocalDate.fromMillisSinceEpoch(date.getTime())
+    session.rawSelect(query, localdate, Int.box(str_vhid), Int.box(str_loop_id), time)
   }
 
   def get_row( session:ScalaSession, query:String, str_date:String, int_vhid:Int, int_loop_id:Int, str_time:String ) : Array[Any] = {
