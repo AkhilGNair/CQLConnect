@@ -78,8 +78,14 @@ object PreviousPoll {
   }
 
   def get_row( session:ScalaSession, query:String, str_date:String, int_vhid:Int, int_loop_id:Int, str_time:String ) : Array[Any] = {
-    val aRow: Row = query_row(session, query:String, str_date, int_vhid, int_loop_id, str_time).next()  // LIMIT 1 query, select next
-    val model: PollModel = aRow.as[PollModel]
+    // Query cassandra to get the row
+    val aRow: Iterator[Row] = query_row(session, query:String, str_date, int_vhid, int_loop_id, str_time)  // LIMIT 1 query, select next
+    // If there is no row, return an empty array
+    if(aRow.isEmpty) { return(Array():Array[Any]) }
+    // If a row exists, puts the row into a model
+    val foundRow: Row = aRow.next()
+    val model: PollModel = foundRow.as[PollModel]
+    // Return the extracted values from the model in a list
     extract_values(model)
   }
 
