@@ -25,8 +25,8 @@ cql_previous_poll <- function(sc, session, query, str_date, str_vhid, str_loop_i
   timestamp = stringr::str_replace(str_time, "([0-9]{4}-[0-9]{2}-[0-9]{2}) ([0-9]{2}:[0-9]{2}:[0-9]{2})", "\\1T\\2")
   row = sparklyr::invoke_static(sc, "CQLConnect.PreviousPoll", "get_row", session, query, str_date, str_vhid, str_loop_id, timestamp)
 
-  # Handle no returned row
-  if(length(row) < 2) { return(row) }
+  # Handle no returned row - ad hoc place holder
+  if(length(row) < 2) { l = as.list(1:13); l[[2]] = as.POSIXct(NA_real_, origin = "1970-01-01"); return(l) }
 
   # Comes back with a java object to be converted to a timestamp
   row[[2]] = date_to_time(sc, row[[2]])
