@@ -7,9 +7,8 @@ Authors@R: c(
     )
 Maintainer: Akhil Nair <akhil.nair@amey.co.uk>
 Description: This is not a generic package currently - It queries a single row
-    from a specific data model as this is the only functionality I required. It's
-    a good template though! Change the query and model if this is not updated to be
-    more generic soon...
+    from a specific data model as this is the only functionality I required. A 
+    more generic package requires more skill with Scala than I have...
 License: MIT LICENSE
 LazyData: TRUE
 Depends:
