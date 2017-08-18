@@ -1,26 +1,31 @@
 Package: CQLConnect
 Type: Package
 Title: CQLConnect - Dispatch cql to query a Cassandra database via scala
-Version: 1.0.0.9000
+Version: 2.1.0
 Authors@R: c(
     person("Akhil", "Nair", email = "akhil.nair@amey.co.uk", role = c("aut", "cre"))
     )
 Maintainer: Akhil Nair <akhil.nair@amey.co.uk>
-Description: This is not a generic package currently - It queries a single row
-    from a specific data model as this is the only functionality I required. A 
-    more generic package requires more skill with Scala than I have...
+Description: This package shows how to submit raw queries to a 
+    cassandra database and receive replies.  The database models
+    being queried must be specified via custom Scala
 License: MIT LICENSE
 LazyData: TRUE
 Depends:
-    R (>= 3.1.2)
+    R (>= 3.4.1)
 Imports:
+    sparklyr (>= 0.6.1),
+    stringr,
     rprojroot,
     digest
 Remotes: rstudio/sparklyr
 Suggests:
     testthat
-RoxygenNote: 5.0.1
-Collate:
+RoxygenNote: 6.0.1
+Collate: 
+    'connection_manager.R'
+    'count.R'
     'dependencies.R'
     'utils.R'
+    'file_index.R'
     'previous_poll.R'
