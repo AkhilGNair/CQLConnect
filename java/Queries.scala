@@ -4,7 +4,7 @@ import com.weather.scalacass.ScalaSession
 
 object Queries {
 
-  def previous_poll_query( keyspace: String , table: String ) : String = {
+  def previous_poll_query( keyspace: String, table: String ) : String = {
 
     val previous_poll_query =
       s"""SELECT
@@ -29,6 +29,22 @@ object Queries {
          |  LIMIT 1""".stripMargin
 
     previous_poll_query
+
+  }
+
+  def null_response_query( session: ScalaSession ) : String = {
+
+    val keyspace = session.keyspace
+
+    val null_response_query =
+      s"""SELECT
+       |  *
+       |FROM $keyspace.mv_polls WHERE
+       |  date=? AND
+       |  vehicle_id_command=?
+       |""".stripMargin
+
+    null_response_query
 
   }
 
