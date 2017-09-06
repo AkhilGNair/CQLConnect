@@ -1,7 +1,7 @@
 Package: CQLConnect
 Type: Package
 Title: CQLConnect - Dispatch cql to query a Cassandra database via scala
-Version: 2.3.0
+Version: 2.4.0
 Authors@R: c(
     person("Akhil", "Nair", email = "akhil.nair@amey.co.uk", role = c("aut", "cre"))
     )
@@ -28,4 +28,5 @@ Collate:
     'dependencies.R'
     'utils.R'
     'file_index.R'
+    'null_responses.R'
     'previous_poll.R'
