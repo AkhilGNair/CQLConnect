@@ -67,7 +67,7 @@ object NullResponse {
         connected = true
       }
 
-      if (!connected) non_acknowledged_messages :+= this_row
+      if (!connected && row.command_response_type == "PollNull") non_acknowledged_messages :+= this_row
 
     }
 
