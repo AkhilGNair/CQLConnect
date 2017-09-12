@@ -57,7 +57,7 @@ object NullResponse {
 
     if (!df.hasNext) return Iterator.empty
 
-    while (!connected) {
+    while (!connected && df.hasNext) {
 
       var this_row = df.next().as[NullResponseModel] // df is a row iterator
 
