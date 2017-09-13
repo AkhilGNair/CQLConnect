@@ -52,7 +52,7 @@ object NullResponse {
   def get_null_acknowledged_messages(df: Iterator[Row]): Iterator[NullResponseModel] = {
 
     var current_loop = (0, 0)
-    var non_acknowledged_messages = Stream.empty[NullResponseModel]
+    var non_acknowledged_messages = List.empty[NullResponseModel]
     var connected = false
 
     if (!df.hasNext) return Iterator.empty
