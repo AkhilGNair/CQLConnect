@@ -23,6 +23,7 @@ Suggests:
     testthat
 RoxygenNote: 6.0.1
 Collate: 
+    'cassandra_table.R'
     'connection_manager.R'
     'count.R'
     'dependencies.R'
