@@ -22,6 +22,7 @@ object Queries {
          |  train_integrity,
          |  vehicle_door_status
          |FROM $keyspace.$table WHERE
+         |  line=? AND
          |  date=? AND
          |  vehicle_id_command=? AND
          |  actual_loop_id=? AND
