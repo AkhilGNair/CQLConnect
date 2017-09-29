@@ -17,6 +17,7 @@ object FileIndex {
 
     val query =
       s"""SELECT
+         |  line,
          |  analysed,
          |  date,
          |  file_name,
@@ -47,4 +48,3 @@ object FileIndex {
   }
 
 }
-
