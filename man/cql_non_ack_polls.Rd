@@ -4,7 +4,7 @@
 \alias{cql_non_ack_polls}
 \title{Gets all polls for a partition, statefully filters non-acknowledged polls and writes to Cassandra}
 \usage{
-cql_non_ack_polls(date, vhid)
+cql_non_ack_polls(sc, session, date, vhid)
 }
 \description{
 Gets all polls for a partition, statefully filters non-acknowledged polls and writes to Cassandra
