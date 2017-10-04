@@ -4,7 +4,7 @@
 \alias{cql_get_table}
 \title{Get a Cassandra table}
 \usage{
-cql_get_table(sc, keyspace, table)
+cql_get_table(sc, keyspace, table, select_cols = list())
 }
 \description{
 Get a Cassandra table
