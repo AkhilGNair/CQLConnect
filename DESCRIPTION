@@ -1,7 +1,7 @@
 Package: CQLConnect
 Type: Package
 Title: CQLConnect - Dispatch cql to query a Cassandra database via scala
-Version: 2.5.1
+Version: 2.6.0
 Authors@R: c(
     person("Akhil", "Nair", email = "akhil.nair@amey.co.uk", role = c("aut", "cre"))
     )
@@ -18,11 +18,11 @@ Imports:
     stringr,
     rprojroot,
     digest
-Remotes: rstudio/sparklyr
+Remotes: rstudio/sparklyr@bugfix/reconnect-sigpipe
 Suggests:
     testthat
 RoxygenNote: 6.0.1
-Collate:
+    'cassandra_table.R'
     'connection_manager.R'
     'count.R'
     'dependencies.R'
