@@ -38,7 +38,7 @@ object Models {
                               )
 
 
-  case class DistMVFileIndexModel(
+  case class DistMVFileIndexModel( line: Int,
                                    analysed: Boolean,
                                    date: LocalDate,
                                    file_name: String,

@@ -59,7 +59,7 @@ cql_get_file_index <- function(sc, session) {
   })
 
   # Transpose the nested list and set as a data.table
-  dt = split(unlist(dtl, use.names = FALSE), c("analysed", "date", "file_name", "state"))
+  dt = split(unlist(dtl, use.names = FALSE), c("line", "analysed", "date", "file_name", "state"))
   data.table::setDT(dt)
 
   # Some casting which could be avoided if not for unlist

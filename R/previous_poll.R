@@ -27,10 +27,10 @@ cql_previous_poll_query <- function(sc, keyspace, table) {
 #'
 #' @include utils.R
 #' @export
-cql_previous_poll <- function(sc, session, query, str_date, str_vhid, str_loop_id, str_time) {
+cql_previous_poll <- function(sc, session, query, str_date, int_line, str_vhid, str_loop_id, str_time) {
   # Pretty specific
   timestamp = stringr::str_replace(str_time, "([0-9]{4}-[0-9]{2}-[0-9]{2}) ([0-9]{2}:[0-9]{2}:[0-9]{2})", "\\1T\\2")
-  row = sparklyr::invoke_static(sc, "CQLConnect.PreviousPoll", "get_poll_row", session, query, str_date, str_vhid, str_loop_id, timestamp)
+  row = sparklyr::invoke_static(sc, "CQLConnect.PreviousPoll", "get_poll_row", session, query, int_line, str_date, str_vhid, str_loop_id, timestamp)
 
   # Handle no returned row - ad hoc place holder
   if(length(row) < 2) { l = as.list(rep(NA_integer_, 13)); l[[2]] = as.POSIXct(NA_real_, origin = "1970-01-01"); return(l) }
