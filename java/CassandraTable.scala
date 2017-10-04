@@ -13,6 +13,7 @@ import org.apache.spark.SparkContext
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.types._
 
+import CQLConnect.DateUtils.DateFormatter
 
 object CassandraTable {
 
@@ -27,15 +28,15 @@ object CassandraTable {
   }
 
 
-  def get_table ( sc: SparkContext, keyspace: String, table: String, select: Array[String]) = {
+  def get_table ( sc: SparkContext, keyspace: String, table: String, select_cols: Array[String]) = {
 
     var schema = spark.read.cassandraFormat(table, keyspace).load.schema
 
     var cass_table = sc.cassandraTable(keyspace, table)
 
-    if (select.length > 0) {
-      schema = StructType(schema.filter(x => select.contains(x.name)))
-      cass_table = cass_table.select(select.map(ColumnName(_)):_*)
+    if (select_cols.length > 0) {
+      schema = StructType(schema.filter(x => select_cols.contains(x.name)))
+      cass_table = cass_table.select(select_cols.map(ColumnName(_)):_*)
     }
 
     val spk_cass = cass_table.map{ case cassandraRow => Row(cassandraRow.columnValues.map(convertToSpark):_*) }
@@ -46,16 +47,30 @@ object CassandraTable {
 
   }
 
-  def test_jwct ( sc: SparkContext, keyspace: String, table: String ) = {
+  def get_obc_model ( sc: SparkContext, keyspace: String, table: String, str_date: String, select_cols: Array[String]) = {
 
-    val schema = spark.read.cassandraFormat(table, keyspace).load.schema
+    var date: sql.Date = new sql.Date(DateFormatter.parse(str_date).getTime())
 
-    val joinResult =
-      sc.cassandraTable(keyspace, "partitions_obc_model").where("date = '2017-05-13'")
+    var schema = spark.read.cassandraFormat(table, keyspace).load.schema
+
+    var cass_join =
+      sc.cassandraTable(keyspace, "partitions_obc_model")
+        .map{ case cassandraRow => (
+          cassandraRow.getInt("line"),
+          cassandraRow.getInt("vehicle_id_command"),
+          date,
+          cassandraRow.getInt("vcc"),
+          cassandraRow.getInt("channel")
+        ) }
         .joinWithCassandraTable(keyspace, table)
-        .map{ case(_, cassandraRow) => Row(cassandraRow.columnValues.map(convertToSpark):_*)}
 
-    val dataset = spark.createDataFrame(joinResult, schema)
+    if (select_cols.length > 0) {
+      schema = StructType(schema.filter(x => select_cols.contains(x.name)))
+      cass_join = cass_join.select(select_cols.map(ColumnName(_)):_*)
+    }
+
+    val spk_cass_join = cass_join.map{ case(_, cassandraRow) => Row(cassandraRow.columnValues.map(convertToSpark):_*)}
+    val dataset = spark.createDataFrame(spk_cass_join, schema)
 
     dataset
 
