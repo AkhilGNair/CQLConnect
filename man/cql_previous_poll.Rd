@@ -4,7 +4,8 @@
 \alias{cql_previous_poll}
 \title{Extract the previous poll R objects}
 \usage{
-cql_previous_poll(sc, session, query, str_date, str_vhid, str_loop_id, str_time)
+cql_previous_poll(sc, session, query, str_date, int_line, str_vhid, str_loop_id,
+  str_time)
 }
 \arguments{
 \item{session}{The cassandra session}

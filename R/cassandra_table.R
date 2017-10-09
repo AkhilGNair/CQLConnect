@@ -34,9 +34,3 @@ cql_get_obc_model <- function(sc, keyspace, table, date, select_cols = list()) {
 
 }
 
-#' Show schema
-#'
-#' @export
-cql_show_schema <- function(sc, keyspace, table) {
-  sparklyr::invoke_static(sc, "CQLConnect.CassandraTable", "show_schema", sc$spark_context, keyspace, table)
-}
