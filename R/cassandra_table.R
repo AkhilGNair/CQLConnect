@@ -24,6 +24,9 @@ cql_get_obc_model <- function(sc, keyspace, table, date, select_cols = list()) {
   cols_reserved = c("line", "vehicle_id_command", "date", "vcc", "channel")
   reserved_cols_used = cols_reserved %in% select_cols
 
+  # However the date is passed in, the scala method expects a character
+  date = as.character(date)
+
   if(any(reserved_cols_used))
     stop("Partition keys not necessary to specify, keys used: ", paste0(cols_reserved[reserved_cols_used], collapse = ", "))
 
