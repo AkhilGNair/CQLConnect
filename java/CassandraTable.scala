@@ -17,9 +17,6 @@ import CQLConnect.DateUtils.DateFormatter
 
 object CassandraTable {
 
-  val spark =  SparkSession.builder().getOrCreate()
-  import spark.implicits._
-
   def convertToSpark(element:Any): Any = element match {
     case time: org.joda.time.LocalDate => new sql.Date(time.toDateTimeAtStartOfDay().getMillis) // Convert to java.sql.Date
     case date: java.util.Date => new Timestamp(date.getTime)
@@ -29,6 +26,9 @@ object CassandraTable {
 
 
   def get_table ( sc: SparkContext, keyspace: String, table: String, select_cols: Array[String]) = {
+
+    val spark =  SparkSession.builder().getOrCreate()
+    import spark.implicits._
 
     var schema = spark.read.cassandraFormat(table, keyspace).load.schema
 
@@ -48,6 +48,9 @@ object CassandraTable {
   }
 
   def get_obc_model ( sc: SparkContext, keyspace: String, table: String, str_date: String, select_cols: Array[String]) = {
+
+    val spark =  SparkSession.builder().getOrCreate()
+    import spark.implicits._
 
     var date: sql.Date = new sql.Date(DateFormatter.parse(str_date).getTime())
 
