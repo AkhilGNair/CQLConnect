@@ -8,7 +8,7 @@ msg "Building jar"
 Rscript compile.r
 
 msg "Documenting R code"
-R -e 'devtools::document()'
+R -q -e 'devtools::document()'
 
 msg "Updating R bindings"
-R -e 'devtools::install()'
+R -q -e 'devtools::install()'
