@@ -2,7 +2,7 @@ package CQLConnect
 
 import scala.language.implicitConversions
 
-import CQLConnect.Models.{ PollModel, extract_poll_values }
+import CQLConnect.Models.{ PollModel, extract }
 import CQLConnect.DateUtils.DateFormatter
 
 import java.util.Date
@@ -31,7 +31,7 @@ object PreviousPoll {
     val foundRow: Row = aRow.next()
     val model: PollModel = foundRow.as[PollModel]
     // Return the extracted values from the model in a list
-    extract_poll_values(model)
+    extract(model)
   }
 
 }

@@ -7,7 +7,7 @@ import com.datastax.driver.core.{ Row, LocalDate }
 import com.weather.scalacass._
 import com.weather.scalacass.syntax._
 
-import CQLConnect.Models.{ DistMVFileIndexModel, extract_dist_mvfileindex_values }
+import CQLConnect.Models.{ DistMVFileIndexModel, extract }
 
 
 object FileIndex {
@@ -44,7 +44,7 @@ object FileIndex {
     val row: Row = df.next()
     val model: DistMVFileIndexModel = row.as[DistMVFileIndexModel]
     // Return the extracted values from the model in a list
-    extract_dist_mvfileindex_values(model)
+    extract(model)
   }
 
 }
