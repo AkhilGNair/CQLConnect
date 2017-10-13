@@ -40,7 +40,8 @@ object Queries {
     val null_response_query =
       s"""SELECT
        |  *
-       |FROM $keyspace.mv_polls WHERE
+       |FROM $keyspace.polls_ordered WHERE
+       |  line=? AND
        |  date=? AND
        |  vehicle_id_command=?
        |""".stripMargin

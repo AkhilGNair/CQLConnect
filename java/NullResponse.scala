@@ -2,7 +2,7 @@ package CQLConnect
 
 import scala.language.implicitConversions
 
-import CQLConnect.Models.{ NullResponseModel, extract_null_response_values }
+import CQLConnect.Models.NullResponseModel
 import CQLConnect.DateUtils.DateFormatter
 import CQLConnect.Queries.null_response_query
 
@@ -38,14 +38,14 @@ object NullResponse {
     same_loop(row, current_loop) & (get_command_response_type(row) == "PollNull")
   }
 
-  def get_df( session:ScalaSession, str_date:String, str_vhid:Int ) : Iterator[Row] = {
+  def get_df( session:ScalaSession, line: Int, str_date:String, str_vhid:Int ) : Iterator[Row] = {
 
     val query: String = null_response_query(session)
 
     val date:Date = DateFormatter.parse(str_date)
     val localdate:LocalDate = LocalDate.fromMillisSinceEpoch(date.getTime())
 
-    session.rawSelect(query, localdate, Int.box(str_vhid))
+    session.rawSelect(query, Int.box(line), localdate, Int.box(str_vhid))
 
   }
 

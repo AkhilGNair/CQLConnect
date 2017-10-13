@@ -15,8 +15,8 @@ NULL
 #' Get the partition of ordered telegrams for a vehicle
 #'
 #' @export
-cql_get_null_response_partition <- function(sc, session, date, vhid) {
-  sparklyr::invoke_static(sc, "CQLConnect.NullResponse", "get_df", session, date, vhid)
+cql_get_null_response_partition <- function(sc, session, line, date, vhid) {
+  sparklyr::invoke_static(sc, "CQLConnect.NullResponse", "get_df", session, as.integer(line), date, vhid)
 }
 
 #' Get the non-acknowledged messages
@@ -40,10 +40,10 @@ cql_write_non_ack_polls <- function(sc, session, iterator) {
 #' Gets all polls for a partition, statefully filters non-acknowledged polls and writes to Cassandra
 #'
 #' @export
-cql_non_ack_polls = function(sc, session, date, vhid) {
+cql_non_ack_polls = function(sc, session, line, date, vhid) {
 
   # Get all polls
-  df = cql_get_null_response_partition(sc, session, date, vhid)
+  df = cql_get_null_response_partition(sc, session, as.integer(line), date, vhid)
 
   # Filter out only non-acknowledged polls
   df_non_ack = cql_get_non_ack_polls(sc, df)

@@ -4,7 +4,7 @@
 \alias{cql_get_null_response_partition}
 \title{Get the partition of ordered telegrams for a vehicle}
 \usage{
-cql_get_null_response_partition(sc, session, date, vhid)
+cql_get_null_response_partition(sc, session, line, date, vhid)
 }
 \description{
 Get the partition of ordered telegrams for a vehicle
