@@ -6,8 +6,8 @@ import com.weather.scalacass.ScalaSession
 
 object Connection {
 
-  def cql_cluster_connect( cl:String ) : Cluster = {
-    val cluster = Cluster.builder.addContactPoint(cl).build()
+  def cql_cluster_connect( cl:String, port: Int = 9042 ) : Cluster = {
+    val cluster = Cluster.builder.withPort(port).addContactPoint(cl).build()
     cluster
   }
 

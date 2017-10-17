@@ -9,8 +9,8 @@
 NULL
 
 #' @export
-cql_cluster_connect <- function(sc, str_cluster) {
-  sparklyr::invoke_static(sc, "CQLConnect.Connection", "cql_cluster_connect", str_cluster)
+cql_cluster_connect <- function(sc, str_cluster, port = 9042) {
+  sparklyr::invoke_static(sc, "CQLConnect.Connection", "cql_cluster_connect", str_cluster, as.integer(port))
 }
 
 #' @export
