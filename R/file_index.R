@@ -64,6 +64,7 @@ cql_get_file_index <- function(sc, session) {
 
   # Some casting which could be avoided if not for unlist
   dt[, analysed := as.logical(analysed)]
+  dt[, line := as.integer(line)]
   dt[, date := as.Date(as.numeric(date), origin = "1970-01-01")]
 
   # Call [.data.table so function returns an object
