@@ -47,25 +47,26 @@ object CassandraTable {
 
   }
 
-  def get_obc_model ( sc: SparkContext, keyspace: String, table: String, str_date: String, select_cols: Array[String]) = {
+  def get_obc_model ( sc: SparkContext, keyspace: String, int_line: Int, str_date: String, select_cols: Array[String]) = {
 
     val spark =  SparkSession.builder().getOrCreate()
     import spark.implicits._
 
     var date: sql.Date = new sql.Date(DateFormatter.parse(str_date).getTime())
 
-    var schema = spark.read.cassandraFormat(table, keyspace).load.schema
+    var schema = spark.read.cassandraFormat("obc_model", keyspace).load.schema
 
     var cass_join =
       sc.cassandraTable(keyspace, "partitions_obc_model")
+        .where("line = ?", int_line)
         .map{ case cassandraRow => (
           cassandraRow.getInt("line"),
           cassandraRow.getInt("vehicle_id_command"),
           date,
           cassandraRow.getInt("vcc"),
           cassandraRow.getInt("channel")
-        ) }
-        .joinWithCassandraTable(keyspace, table)
+        )}
+        .joinWithCassandraTable(keyspace, "obc_model")
 
     if (select_cols.length > 0) {
       schema = StructType(schema.filter(x => select_cols.contains(x.name)))

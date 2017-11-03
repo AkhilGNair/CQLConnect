@@ -4,7 +4,7 @@
 \alias{cql_get_obc_model}
 \title{Test joinWithCassandraTable}
 \usage{
-cql_get_obc_model(sc, keyspace, table, date, select_cols = list())
+cql_get_obc_model(sc, keyspace, line, date, select_cols = list())
 }
 \description{
 Test joinWithCassandraTable
