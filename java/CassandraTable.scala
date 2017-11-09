@@ -58,7 +58,6 @@ object CassandraTable {
 
     var cass_join =
       sc.cassandraTable(keyspace, "partitions_obc_model")
-        .where("line = ?", int_line)
         .map{ case cassandraRow => (
           cassandraRow.getInt("line"),
           cassandraRow.getInt("vehicle_id_command"),
