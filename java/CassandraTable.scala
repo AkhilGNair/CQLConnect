@@ -65,6 +65,7 @@ object CassandraTable {
           cassandraRow.getInt("vcc"),
           cassandraRow.getInt("channel")
         )}
+        .repartitionByCassandraReplica(keyspace, "obc_model")
         .joinWithCassandraTable(keyspace, "obc_model")
 
     if (select_cols.length > 0) {
