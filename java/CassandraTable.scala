@@ -56,6 +56,8 @@ object CassandraTable {
 
     var schema = spark.read.cassandraFormat("obc_model", keyspace).load.schema
 
+    // WARN: Needs repartitioning to the spark cluster
+    // As partitions_obc_model is only partitioned to 2 nodes
     var cass_join =
       sc.cassandraTable(keyspace, "partitions_obc_model")
         .where("line = ?", int_line)
@@ -66,6 +68,7 @@ object CassandraTable {
           cassandraRow.getInt("vcc"),
           cassandraRow.getInt("channel")
         )}
+        .repartitionByCassandraReplica(keyspace, "obc_model")
         .joinWithCassandraTable(keyspace, "obc_model")
 
     if (select_cols.length > 0) {
