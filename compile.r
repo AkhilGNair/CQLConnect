@@ -1,4 +1,8 @@
+#!/usr/bin/env r
 # Get scala and spark versions from environment
+
+if (!interactive()) source("./.Rprofile")
+
 spark_version = Sys.getenv("SPARK_VERSION")
 scala_version = Sys.getenv("SCALA_VERSION")
 

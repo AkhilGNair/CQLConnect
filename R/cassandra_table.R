@@ -38,3 +38,26 @@ cql_get_obc_model <- function(sc, keyspace, line, date, select_cols = list()) {
 
 }
 
+#' Get a Cassandra table
+#'
+#' @export
+cql_get_schema <- function(sc, keyspace, table, select_cols = list()) {
+
+  sparklyr::invoke_static(sc, "CQLConnect.CassandraTable", "get_schema", sc$spark_context, keyspace, table)
+
+}
+
+#' Test joinWithRTable
+#'
+#' @export
+cql_joinWithRTable <- function(sc, tbl_partitions, keyspace, table, select_cols = list()) {
+
+  dataset = sparklyr::spark_dataframe(tbl_partitions)
+
+  writer = sparklyr::invoke_static(sc, "CQLConnect.CassandraTable", "getWriter")
+  reader = sparklyr::invoke_static(sc, "CQLConnect.CassandraTable", "getReader")
+
+  sparklyr::invoke_static(sc, "CQLConnect.CassandraTable", "joinWithRTable", 
+    sc$spark_context, dataset, keyspace, table, select_cols, writer, reader)
+
+}
